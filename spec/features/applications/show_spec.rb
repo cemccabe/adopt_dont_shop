@@ -65,13 +65,12 @@ RSpec.describe 'the application show' do
         pet_1 = Pet.create!(name: 'Scooby', age: 2, breed: 'Great Dane', adoptable: true, shelter_id: shelter_1.id)
         pet_2 = Pet.create!(name: 'Scrappy', age: 1, breed: 'Great Dane', adoptable: true, shelter_id: shelter_1.id)
         app_pet_1 = ApplicationPet.create!(pet_id: pet_1.id, application_id: application_1.id)
-        # app_pet_1 = ApplicationPet.create!(pet_id: pet_2.id, application_id: application_1.id)
 
         visit "/applications/#{application_1.id}"
 
         expect(page).to have_content('Add a pet to this application')
+        
         fill_in "search_for_pet", with: "#{pet_1.name}"
-
         click_on "Submit"
 
         expect(page).to have_content "#{pet_1.name}"
@@ -80,9 +79,29 @@ RSpec.describe 'the application show' do
         click_on "Adopt"
 
         expect(current_path).to eq("/applications/#{application_1.id}")
-
         expect(page).to have_content("Pets I want to Adopt: #{pet_1.name}")
         expect(page).to_not have_content("Pets I want to Adopt: #{pet_2.name}")
+      end
+    end
+  end
+
+  describe 'User Story #6' do
+    describe 'Visit application show page And I have added one or more pets to the application' do
+      it 'Then I see a section to submit my application And in that section I see an input to enter why I would make a good owner for these pet(s)' do
+        shelter_1 = Shelter.create!(name: 'Mystery Building', city: 'Irvine CA', foster_program: false, rank: 9)
+        application_1 = Application.create!(name: 'Shaggy', street_address: '123 Mystery Lane', city: 'Denver', state: 'Colorado', zip_code: '80203', description: "I have snacks", status: "Pending")
+        pet_1 = Pet.create!(name: 'Scooby', age: 2, breed: 'Great Dane', adoptable: true, shelter_id: shelter_1.id)
+        pet_2 = Pet.create!(name: 'Scrappy', age: 1, breed: 'Great Dane', adoptable: true, shelter_id: shelter_1.id)
+        app_pet_1 = ApplicationPet.create!(pet_id: pet_1.id, application_id: application_1.id)
+
+        visit "/applications/#{application_1.id}"
+        
+        fill_in "search_for_pet", with: "#{pet_1.name}"
+        click_on "Submit"
+        click_on "Adopt"
+
+        expect(page).to have_button("Submit my Application")
+        expect(page).to have_content("Why I would make a good owner for these pet(s)")
       end
     end
   end

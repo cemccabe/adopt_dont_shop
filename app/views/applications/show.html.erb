@@ -2,7 +2,6 @@
 <p>Name: <%= @application.name %></p>
 <p>Address: <%= @application.street_address %></p> 
 <p><%= @application.city %>, <%= @application.state %> <%= @application.zip_code %></p>
-<p>Why I Would Make A Good Pet Parent: <%= @application.description %></p>
 <p>Pets I want to Adopt: 
 <% @application.pets.each do |pet| %> 
   <%= link_to "#{pet.name}", "/pets/#{pet.id}" %>
@@ -15,6 +14,7 @@
 <%= form.submit "Submit" %>
 <% end %>
 <br>
+<% if @application.status == "In Progress" && @application.pets.count == 0 %>
 <% @search_pet.each do |p| %>
   <p> Pet Search Match: 
     <%= link_to p.name, "/pets/#{p.id}" %>
@@ -24,3 +24,9 @@
       <% end %>
     <% end %>
   </p>
+<% elsif @application.status == "In Progress" && @application.pets.count > 0 %>
+<%= form_with url: "/applications/#{@application.id}", method: :patch, local: true do |form| %>
+  <p>What makes you a good owner? <%= form.text_field :description %></p>
+  <%= form.submit "Submit my Application" %>
+<% end %>
+<% end %>
