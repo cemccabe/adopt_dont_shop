@@ -21,7 +21,7 @@ RSpec.describe 'the vet office update' do
       uncheck 'Boarding services'
       fill_in 'Max patient capacity', with: 10
       click_button 'Save'
-
+      
       expect(page).to have_current_path('/veterinary_offices')
       expect(page).to have_content('Wichita vet office')
       expect(page).to_not have_content('Houston vet office')
