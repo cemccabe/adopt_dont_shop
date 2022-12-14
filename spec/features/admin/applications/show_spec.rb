@@ -9,7 +9,6 @@ RSpec.describe 'admin shelters index' do
     @shelter_1.pets.create!(name: 'Scooby', breed: 'Great Dane', age: 2, adoptable: true)
     @shelter_1.pets.create!(name: 'Scrappy', breed: 'Great Dane', age: 1, adoptable: true)
     @shelter_3.pets.create!(name: 'Spot', breed: 'Dalmation', age: 3, adoptable: true)
-    # @shelter_4.pets.create!(name: 'Garfield', breed: 'Tabby', age: 7, adoptable: true)
 
     @application_1 = Application.create!(name: 'Shaggy', street_address: '123 Mystery Lane', city: 'Denver', state: 'Colorado', zip_code: '80203', description: 'I like dogs')
     @application_2 = Application.create!(name: 'Cruela De Ville', street_address: '666 Dalmation Way', city: 'Highland Ranch', state: 'Colorado', zip_code: '80234')
@@ -21,7 +20,6 @@ RSpec.describe 'admin shelters index' do
     @pet_2 = @application_2.pets.create!(name: 'Scrappy', age: 1, breed: 'Great Dane', adoptable: true, shelter_id: @shelter_1.id)
     @pet_4 = @application_3.pets.create!(name: 'Garfield', age: 7, breed: 'Tabby', adoptable: true, shelter_id: @shelter_2.id)
   end
-
 
   it 'approves pet' do
     visit "/admin/applications/#{@application_1.id}"
@@ -44,16 +42,15 @@ RSpec.describe 'admin shelters index' do
     expect(page).to have_button('Approve Scrappy')
     expect(page).to have_content('Scooby\'s status: Rejected')
   end
+
   describe 'when there are multiple application in system for same pet and I visit admin application show page for one of those applications' do 
     describe 'and I approve or reject the pet for that application' do
       describe 'then I visit the other applications admin show page' do
         it 'does not show pet has been accepted or rejected but shows buttons to approve or reject the pet on the current application' do
-
           visit "/admin/applications/#{@application_1.id}"
           click_button "Approve Scooby"
           click_button "Reject Scrappy"
           visit "/admin/applications/#{@application_2.id}"
-          
           expect(page).to have_button("Approve Scooby")
           expect(page).to have_button('Approve Scrappy')
         end

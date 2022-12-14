@@ -74,7 +74,7 @@ RSpec.describe Shelter, type: :model do
       end
     end
 
-    # include not best for test assertion - #eq returns ActiveRecord relation, not Shelter object
+    # #include not best for test assertion - #eq returns ActiveRecord relation, not Shelter object
     describe '#pending' do
       it 'returns shelters that have pending applications' do
         @application_1 = Application.create!(name: 'Shaggy', street_address: '123 Mystery Lane', city: 'Denver', state: 'Colorado', zip_code: '80203')

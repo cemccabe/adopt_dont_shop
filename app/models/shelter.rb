@@ -22,7 +22,6 @@ class Shelter < ApplicationRecord
 
   def self.pending
     Shelter.select("shelters.*").joins(pets: :applications).where(:status == "Pending").distinct
-    # require 'pry'; binding.pry
   end
 
   def pet_count
