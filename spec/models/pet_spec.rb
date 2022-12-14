@@ -49,7 +49,6 @@ RSpec.describe Pet, type: :model do
       @pet_4 = @application_1.pets.create!(name: 'Scooby', age: 2, breed: 'Great Dane', adoptable: true, shelter_id: @shelter_2.id)
       
       expect(@pet_4.approval(@application_1.id)).to eq('Pending')
-
     end
   end
 end

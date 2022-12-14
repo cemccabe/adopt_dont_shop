@@ -48,6 +48,4 @@ Rails.application.routes.draw do
 
   get '/admin/applications/:id', to: 'admin_applications#show'
   patch '/admin/applications/:id', to: 'admin_applications#update'
-
 end
-

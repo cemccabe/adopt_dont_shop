@@ -4,13 +4,11 @@ class ApplicationsController < ApplicationController
     @search_pet = []
 
     if self.params[:search_for_pet]
-    #  @search_pet
-    @search_pet = Pet.search(params[:search_for_pet])
+      @search_pet = Pet.search(params[:search_for_pet])
     end
   end
 
   def new
-    
   end
 
   def create
@@ -23,31 +21,17 @@ class ApplicationsController < ApplicationController
     end
   end
 
-
   def edit
     @application = Application.find(params[:id])
   end
 
-  # def update
-  #   @application = Application.find(params[:id])
-  #   if params[:pet]
-  #     @pet = Pet.find(params[:pet])
-  #     ApplicationPet.create!(application: @application, pet: @pet)
-  #     redirect_to "/applications/#{@application.id}"
-  #   end
-  #   # application.update(application_params)
-  # end
-
   def update
     @application = Application.find(params[:id])
-    # @application.update(application_params)
     if params[:pet]
       @pet = Pet.find(params[:pet])
       ApplicationPet.create(application: @application, pet: @pet)
     end
     if params[:description]
-      # @application.update(status: "Pending")
-      # @application.save
       @application.update(description: params[:description])
       @application.update(status: "Pending")
     end
